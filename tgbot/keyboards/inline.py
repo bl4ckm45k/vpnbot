@@ -14,7 +14,7 @@ def keyboard_help():
     return InlineKeyboardMarkup().row(
         InlineKeyboardButton(
             f'Доступ к VPN', callback_data=vpn_callback.new(
-                action_type='vpn_settings'
+                action_type='vpn_settings', server='n'
             )
         )
     ).row(InlineKeyboardButton(f'Клиент Outline VPN',
