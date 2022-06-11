@@ -30,6 +30,10 @@ class TgChats:
 class Outline:
     url: str
 
+@dataclass
+class Server:
+    url: str
+
 
 @dataclass
 class Config:
@@ -37,6 +41,7 @@ class Config:
     db: DbConfig
     tg_chats: TgChats
     outline: Outline
+    server: Server
 
 
 def load_config(path: str = None):
@@ -58,5 +63,6 @@ def load_config(path: str = None):
             user=env.str('DB_USER'),
             database=env.str('DB_NAME')
         ),
-        outline=Outline(url=env.str("OUTLINE_URL"))
+        outline=Outline(url=env.str("OUTLINE_URL")),
+        server=Server(url=env.str("SERVER_URL"))
     )

@@ -10,8 +10,6 @@ from tgbot.handlers.error_handler import register_error_handler
 from tgbot.handlers.user import register_user
 from tgbot.handlers.vpn_settings import register_vpn_handlers
 from tgbot.middlewares.db import DbMiddleware
-
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
@@ -36,14 +34,11 @@ async def on_startup(dispatcher):
         format=u'%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s',
     )
     logger.info("Starting bot")
-    bot['config'] = c
 
     register_all_middlewares(dispatcher)
     register_all_filters(dispatcher)
     register_all_handlers(dispatcher)
-    data = await bot.get_me()
-    print(data)
-    await bot.set_webhook(f"https://29cb-79-139-133-121.ngrok.io/vincent/vpn/bot")
+    await bot.set_webhook(f"{c.server.url}/vincent/vpn/bot")
     await on_startup_notify(dispatcher)
 
 
