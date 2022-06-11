@@ -44,17 +44,29 @@ class Database:
         return await self.execute(sql, user_id, execute=True)
 
     async def select_active(self, user_id):
-        sql = "SELECT active FROM tg_users WHERE user_id=$1"
+        sql = "SELECT (active, server_id) FROM tg_users WHERE user_id=$1"
         return await self.execute(sql, user_id, fetchval=True)
 
     async def get_key_id(self, user_id):
-        sql = "SELECT key_id FROM tg_users WHERE user_id =$1"
+        sql = "SELECT (key_id, server_id) FROM tg_users WHERE user_id =$1"
         return await self.execute(sql, user_id, fetchval=True)
 
-    async def update_key(self, user_id, key_id):
-        sql = "UPDATE tg_users SET active=$3, key_id=$2 WHERE user_id=$1"
-        return await self.execute(sql, user_id, key_id, True, execute=True)
+    async def update_key(self, user_id, key_id, server_id):
+        sql = "UPDATE tg_users SET active=$3, key_id=$2,server_id=$4 WHERE user_id=$1"
+        return await self.execute(sql, user_id, key_id, True, server_id, execute=True)
 
     async def delete_key(self, user_id):
-        sql = "UPDATE tg_users SET active=$2, key_id=NULL WHERE user_id=$1"
+        sql = "UPDATE tg_users SET active=$2, key_id=NULL, server_id=NULL WHERE user_id=$1"
         return await self.execute(sql, user_id, False, execute=True)
+
+    async def get_servers(self):
+        sql = "SELECT (id, country) FROM vpn_servers"
+        return await self.execute(sql, fetch=True)
+
+    async def get_server(self, server_id):
+        sql = "SELECT country FROM vpn_servers WHERE id=$1"
+        return await self.execute(sql, server_id, fetchval=True)
+
+    async def get_server_key(self, server_id):
+        sql = "SELECT api_link FROM vpn_servers WHERE id=$1"
+        return await self.execute(sql, server_id, fetchval=True)

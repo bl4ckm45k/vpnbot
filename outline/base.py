@@ -11,12 +11,10 @@ logger = logging.getLogger(__name__)
 
 
 class OutlineManager:
-    def __init__(self, api_url: str,
+    def __init__(self,
                  loop: Optional[Union[asyncio.BaseEventLoop, asyncio.AbstractEventLoop]] = None,
-                 connections_limit: int = None,
                  timeout: Optional[Union[int, float, aiohttp.ClientTimeout]] = None, ):
         self.headers = {'Content-Type': 'application/json'}
-        self._api_url = api_url
         self._main_loop = loop
 
         self._session: Optional[aiohttp.ClientSession] = None
@@ -52,13 +50,14 @@ class OutlineManager:
         if self._session:
             await self._session.close()
 
-    async def request(self, method: str,
-                      data: Optional[Dict] = None, post: bool = False, **kwargs) -> Union[List, Dict, bool]:
+    async def request(self, url: str, method: str, post: bool = False, **kwargs) -> Union[List, Dict, bool]:
         """
         Make an request to ABCP API
 
-        :param method: API method
+        :param method: API Method
         :type method: :obj:`str`
+        :param url: API url
+        :type url: :obj:`str`
         :param data: request parameters
         :param post:
         :type data: :obj:`dict`
@@ -67,11 +66,10 @@ class OutlineManager:
         :raise: :obj:`utils.exceptions`
         """
 
-        return await make_request(await self.get_session(), self._api_url,
-                                  method, data, post, timeout=self.timeout, **kwargs)
+        return await make_request(await self.get_session(), url, method, post, timeout=self.timeout, **kwargs)
 
-    async def create_key(self):
-        return await self.request(Methods.KEYS, None, True)
+    async def create_key(self, api_key: str):
+        return await self.request(api_key, Methods.KEYS, True)
 
-    async def delete_key(self, key_id: int):
-        return await self.request(Methods.KEYS + f"/{key_id}")
+    async def delete_key(self, api_key: str, key_id: int):
+        return await self.request(api_key, f"{Methods.KEYS}/{key_id}")

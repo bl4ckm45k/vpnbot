@@ -43,20 +43,19 @@ def check_result(method_name: str, content_type: str, status_code: int, body):
     raise OutlineError(f"{body} [{status_code}]")
 
 
-async def make_request(session, url, method, data=None, post: bool = False, **kwargs):
-    logger.debug('Make request: "%s" with data: "%r"', method, data)
+async def make_request(session, url, method, post: bool = False, **kwargs):
+    logger.debug('Make request: "%s" ', method)
     headers = {'Accept': 'application/json'}
-    uri = f"{url}/{method}"
     try:
         if post:
-            async with session.post(uri, headers=headers, **kwargs) as response:
+            async with session.post(f"{url}/{method}", headers=headers, **kwargs) as response:
                 try:
                     body = await response.json()
                 except:
                     body = response.text
                 return check_result(method, response.content_type, response.status, body)
         else:
-            async with session.delete(uri, headers=headers, **kwargs) as response:
+            async with session.delete(f"{url}/{method}", headers=headers, **kwargs) as response:
                 if response.status == 204:
                     return True
                 try:
