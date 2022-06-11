@@ -13,7 +13,7 @@ async def user_start(message: Message):
     await db.add_tg_user(message.from_user.id)
     logger.info(f'START FROM USER {message.from_user}')
     await message.answer('Привет, я помогу тебе с VPN\n\n'
-                         'Исходный код бота - <a href="https://github.com/bl4ckm45k/">GitHub</a>\n'
+                         'Исходный код бота - <a href="https://github.com/bl4ckm45k/vpnbot">GitHub</a>\n'
                          'Здесь прячется человек - <a href="https://twitter.com/Vincent_env">Twitter</a>',
                          reply_markup=keyboard_start(), disable_web_page_preview=True)
 
