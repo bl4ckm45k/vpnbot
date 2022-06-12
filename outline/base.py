@@ -52,7 +52,7 @@ class OutlineManager:
 
     async def request(self, url: str, method: str, post: bool = False, **kwargs) -> Union[List, Dict, bool]:
         """
-        Make an request to ABCP API
+        Make an request to Outline API
 
         :param method: API Method
         :type method: :obj:`str`
