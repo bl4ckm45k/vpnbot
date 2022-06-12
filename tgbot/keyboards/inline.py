@@ -18,7 +18,7 @@ def keyboard_help():
             )
         )
     ).row(InlineKeyboardButton(f'Клиент Outline VPN',
-                               url=f'https://s3.amazonaws.com/outline-vpn/invite.html#/ru/home'))
+                               url=f'https://getoutline.org/ru/get-started/'))
 
 
 async def keyboard_get_key():

@@ -5,10 +5,12 @@ from aiogram.types import Message, CallbackQuery
 
 from loader import db, bot
 from tgbot.keyboards.inline import keyboard_start, keyboard_help
+from tgbot.misc.throttling import rate_limit
 
 logger = logging.getLogger(__name__)
 
 
+@rate_limit(5, 'start')
 async def user_start(message: Message):
     await db.add_tg_user(message.from_user.id)
     logger.info(f'START FROM USER {message.from_user}')
@@ -18,6 +20,7 @@ async def user_start(message: Message):
                          reply_markup=keyboard_start(), disable_web_page_preview=True)
 
 
+@rate_limit(5, 'help')
 async def help_handler(message: Message):
     await message.answer(f'Outline – это ПО с открытым исходным кодом, '
                          f'которое прошло проверку организации Radically Open Security.\n\n'

@@ -9,12 +9,12 @@ from tgbot.handlers.admin import register_admin
 from tgbot.handlers.error_handler import register_error_handler
 from tgbot.handlers.user import register_user
 from tgbot.handlers.vpn_settings import register_vpn_handlers
-from tgbot.middlewares.db import DbMiddleware
+from tgbot.middlewares.flood import ThrottlingMiddleware
 logger = logging.getLogger(__name__)
 
 
 def register_all_middlewares(dp):
-    dp.setup_middleware(DbMiddleware())
+    dp.setup_middleware(ThrottlingMiddleware())
 
 
 def register_all_filters(dp):
