@@ -1,11 +1,12 @@
-import asyncio
 import logging
 
-from aiogram import Dispatcher, types
+from aiogram import types
 from aiogram.dispatcher import DEFAULT_RATE_LIMIT
 from aiogram.dispatcher.handler import CancelHandler, current_handler
 from aiogram.dispatcher.middlewares import BaseMiddleware
 from aiogram.utils.exceptions import Throttled
+
+from loader import dp as Dispatcher
 
 logger = logging.getLogger(__name__)
 
@@ -56,18 +57,6 @@ class ThrottlingMiddleware(BaseMiddleware):
         :param message:
         :param throttled:
         """
-        handler = current_handler.get()
-        dispatcher = Dispatcher.get_current()
-        if handler:
-            key = getattr(handler, 'throttling_key', f"{self.prefix}_{handler.__name__}")
-        else:
-            key = f"{self.prefix}_message"
-
-        # Calculate how many time is left till the block ends
-        delta = throttled.rate - throttled.delta
-
-        # Prevent flooding
         if throttled.exceeded_count <= 2:
-            await message.reply(f'Слишком много запросов. Вы заблокированы на {int(delta + 30)} сек.')
-
-        await asyncio.sleep(delta + 30)
+            logger.info(f'<= 2 {throttled.exceeded_count}')
+            await message.reply(f'Слишком много запросов, попробуйте позже')

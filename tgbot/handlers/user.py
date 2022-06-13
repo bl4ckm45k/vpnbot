@@ -10,20 +10,21 @@ from tgbot.misc.throttling import rate_limit
 logger = logging.getLogger(__name__)
 
 
-@rate_limit(5, 'start')
+@rate_limit(2, 'start')
 async def user_start(message: Message):
     await db.add_tg_user(message.from_user.id)
     logger.info(f'START FROM USER {message.from_user}')
     await message.answer('Привет, я помогу тебе с VPN\n\n'
                          'Исходный код бота - <a href="https://github.com/bl4ckm45k/vpnbot">GitHub</a>\n'
-                         'Здесь прячется человек - <a href="https://twitter.com/Vincent_env">Twitter</a>',
+                         'Здесь прячется человек - <a href="https://t.me/pay4fallwall">Telegram</a>',
                          reply_markup=keyboard_start(), disable_web_page_preview=True)
 
 
-@rate_limit(5, 'help')
+@rate_limit(2, 'help')
 async def help_handler(message: Message):
     await message.answer(f'Outline – это ПО с открытым исходным кодом, '
-                         f'которое прошло проверку организации Radically Open Security.\n\n'
+                         f'которое прошло проверку организаций '
+                         f'<a href="https://s3.amazonaws.com/outline-vpn/static_downloads/ros-report.pdf">Radically Open Security</a> и <a href="https://s3.amazonaws.com/outline-vpn/static_downloads/cure53-report.pdf">Cure53</a> .\n\n'
                          f'Outline использует технологии <a href="https://shadowsocks.org/">Shadowsocks</a>\n\n',
                          reply_markup=keyboard_help(), disable_web_page_preview=True)
 
@@ -32,7 +33,8 @@ async def help_callback_handler(callback_query: CallbackQuery):
     await callback_query.answer()
     await bot.send_message(callback_query.from_user.id,
                            f'Outline – это ПО с открытым исходным кодом, '
-                           f'которое прошло проверку организации Radically Open Security.\n\n'
+                           f'которое прошло проверку организаций '
+                           f'<a href="https://s3.amazonaws.com/outline-vpn/static_downloads/ros-report.pdf">Radically Open Security</a> и <a href="https://s3.amazonaws.com/outline-vpn/static_downloads/cure53-report.pdf">Cure53</a> .\n\n'
                            f'Outline использует технологии <a href="https://shadowsocks.org/">Shadowsocks</a>\n\n',
                            reply_markup=keyboard_help(), disable_web_page_preview=True)
 
