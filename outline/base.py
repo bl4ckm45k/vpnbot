@@ -10,7 +10,7 @@ from .api import make_request, Methods
 logger = logging.getLogger(__name__)
 
 
-class AsyncOutlineVPN:
+class OutlineManager:
     def __init__(self,
                  loop: Optional[Union[asyncio.BaseEventLoop, asyncio.AbstractEventLoop]] = None,
                  timeout: Optional[Union[int, float, aiohttp.ClientTimeout]] = None, ):
@@ -18,7 +18,7 @@ class AsyncOutlineVPN:
         self._main_loop = loop
 
         self._session: Optional[aiohttp.ClientSession] = None
-        self._timeout = timeout
+        self.timeout = timeout
 
     async def get_new_session(self) -> aiohttp.ClientSession:
         return aiohttp.ClientSession(
@@ -53,7 +53,6 @@ class AsyncOutlineVPN:
     async def request(self, url: str, method: str, post: bool = False, **kwargs) -> Union[List, Dict, bool]:
         """
         Make an request to Outline API
-
         :param method: API Method
         :type method: :obj:`str`
         :param url: API url
@@ -66,7 +65,7 @@ class AsyncOutlineVPN:
         :raise: :obj:`utils.exceptions`
         """
 
-        return await make_request(await self.get_session(), url, method, post, timeout=self._timeout, **kwargs)
+        return await make_request(await self.get_session(), url, method, post, timeout=self.timeout, **kwargs)
 
     async def create_key(self, api_key: str):
         return await self.request(api_key, Methods.KEYS, True)
