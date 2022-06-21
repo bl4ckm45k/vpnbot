@@ -39,26 +39,6 @@ class Database:
                     result = await connection.execute(command, *args)
                 return result
 
-    async def add_tg_user(self, user_id):
-        sql = "INSERT INTO tg_users (user_id) VALUES ($1) ON CONFLICT ON CONSTRAINT tg_users_user_id_key DO NOTHING"
-        return await self.execute(sql, user_id, execute=True)
-
-    async def select_active(self, user_id):
-        sql = "SELECT (active, server_id) FROM tg_users WHERE user_id=$1"
-        return await self.execute(sql, user_id, fetchval=True)
-
-    async def get_key_id(self, user_id):
-        sql = "SELECT (key_id, server_id) FROM tg_users WHERE user_id =$1"
-        return await self.execute(sql, user_id, fetchval=True)
-
-    async def update_key(self, user_id, key_id, server_id):
-        sql = "UPDATE tg_users SET active=$3, key_id=$2,server_id=$4 WHERE user_id=$1"
-        return await self.execute(sql, user_id, key_id, True, server_id, execute=True)
-
-    async def delete_key(self, user_id):
-        sql = "UPDATE tg_users SET active=$2, key_id=NULL, server_id=NULL WHERE user_id=$1"
-        return await self.execute(sql, user_id, False, execute=True)
-
     async def get_servers(self):
         sql = "SELECT (id, country) FROM vpn_servers"
         return await self.execute(sql, fetch=True)

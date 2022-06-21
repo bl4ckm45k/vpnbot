@@ -12,8 +12,6 @@ logger = logging.getLogger(__name__)
 
 @rate_limit(2, 'start')
 async def user_start(message: Message):
-    await db.add_tg_user(message.from_user.id)
-    logger.info(f'START FROM USER {message.from_user}')
     await message.answer('Привет, я помогу тебе с VPN\n\n'
                          'Исходный код бота - <a href="https://github.com/bl4ckm45k/vpnbot">GitHub</a>\n'
                          'Здесь прячется человек - <a href="https://t.me/pay4fallwall">Telegram</a>',
