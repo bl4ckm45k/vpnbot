@@ -7,20 +7,14 @@ from aiohttp import ClientConnectorError
 
 from loader import db, bot, outline
 from tgbot.keyboards.callback_data_factory import vpn_callback
-from tgbot.keyboards.inline import keyboard_get_key, keyboard_delete_and_get
+from tgbot.keyboards.inline import keyboard_get_key
 
 logger = logging.getLogger(__name__)
 
 
 async def vpn_handler(message: Message):
-    active, server_id = await db.select_active(message.from_user.id)
-    if active:
-        await bot.send_message(message.from_user.id, f'У вас уже есть действующий ключ доступа.\n'
-                                                     f'{await db.get_server(server_id)}',
-                               reply_markup=keyboard_delete_and_get())
-    else:
-        await bot.send_message(message.from_user.id, f'Ограничения - один ключ в одни руки',
-                               reply_markup=await keyboard_get_key())
+    await bot.send_message(message.from_user.id, f'Ограничения - один ключ в одни руки',
+                           reply_markup=await keyboard_get_key())
 
 
 async def vpn_callback_handler(callback_query: CallbackQuery):
