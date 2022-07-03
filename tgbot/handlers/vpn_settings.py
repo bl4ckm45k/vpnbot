@@ -4,7 +4,7 @@ from typing import Dict
 from aiogram import Dispatcher
 from aiogram.types import Message, CallbackQuery
 from aiohttp import ClientConnectorError
-
+import aiohttp.client_exceptions
 from loader import db, bot, outline
 from tgbot.keyboards.callback_data_factory import vpn_callback
 from tgbot.keyboards.inline import keyboard_get_key
@@ -35,6 +35,9 @@ async def get_new_key(callback_query: CallbackQuery, callback_data: Dict[str, st
         await bot.send_message(callback_query.from_user.id,
                                f'{data["accessUrl"]}')
     except ClientConnectorError:
+        await bot.send_message(callback_query.from_user.id,
+                               f'Не удалось связаться с сервером для получения ключа, попробуйте через какое-то время')
+    except aiohttp.client_exceptions:
         await bot.send_message(callback_query.from_user.id,
                                f'Не удалось связаться с сервером для получения ключа, попробуйте через какое-то время')
 
