@@ -16,10 +16,12 @@ async def admin_start(message: Message):
 
 
 async def admin_add_server(callback_query: CallbackQuery, state: FSMContext):
+    await dp.bot.delete_message(callback_query.message.chat.id, callback_query.message.message_id)
     await dp.bot.send_message(callback_query.from_user.id, 'Введите название сервера.\n'
                                                            'Можно использовать смайлики, например флаги стран',
                               reply_markup=keyboard_cancel())
     await state.set_state(AddServer.server_name)
+    await callback_query.answer()
 
 
 async def admin_server_name(message: Message, state: FSMContext):
@@ -44,12 +46,14 @@ async def admin_api_link(message: Message, state: FSMContext):
 
 
 async def admin_servers_to_delete(callback_query: CallbackQuery):
+    await dp.bot.delete_message(callback_query.message.chat.id, callback_query.message.message_id)
     await dp.bot.send_message(callback_query.from_user.id, 'Выберите сервер для удаления:',
                               reply_markup=await keyboard_servers_list('to_delete'))
     await callback_query.answer()
 
 
 async def admin_delete_server(callback_query: CallbackQuery, callback_data: Dict[str, str]):
+    await dp.bot.delete_message(callback_query.message.chat.id, callback_query.message.message_id)
     server_id = int(callback_data['server'])
     await db.delete_server(int(server_id))
     await dp.bot.send_message(callback_query.from_user.id, 'Сервер удалён из БД')
