@@ -38,7 +38,6 @@ async def get_new_key(callback_query: CallbackQuery, callback_data: Dict[str, st
 
 
 def register_vpn_handlers(dp: Dispatcher):
-    logger.info('Registering vpn handlers')
     dp.register_message_handler(vpn_handler, commands=["vpn"], chat_type=ChatType.PRIVATE)
     dp.register_callback_query_handler(vpn_callback_handler, vpn_callback.filter(action_type='vpn_settings'), chat_type=ChatType.PRIVATE)
     dp.register_callback_query_handler(get_new_key, vpn_callback.filter(action_type='new_key'), chat_type=ChatType.PRIVATE)
