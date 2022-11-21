@@ -40,8 +40,6 @@ class OutlineManager:
 
         return self._session
 
-    def session(self) -> Optional[aiohttp.ClientSession]:
-        return self._session
 
     async def close(self):
         """

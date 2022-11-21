@@ -1,3 +1,18 @@
 Исходный код телеграм бота [Vincent_vpn_bot](https://t.me/vincent_vpn_bot "Vincent_vpn_bot")
 
-Инструкция [Установка Outline VPN на Ubuntu 20.04](https://gist.github.com/JohnyDeath/3f93899dc78f90cc57ae52b41ea29bac "Установка Outline VPN на Ubuntu 20.04")
+### Инструкция [Установка Outline VPN на Ubuntu 20.04](https://gist.github.com/JohnyDeath/3f93899dc78f90cc57ae52b41ea29bac "Установка Outline VPN на Ubuntu 20.04")
+
+После установки добавьте API ключ в Outline Manager
+
+### Подготовка к запуску
+Переименуйте файл `env.dist` в `.env` 
+
+Замените `BOT_TOKEN` на свой токен
+
+В `ADMIN` укажите telegram id пользователя администратора или список через запятую.
+
+Параметры `DB`, кроме `DB_HOST` на ваше усмотрение
+
+### Запуск
+
+`docker compose up --detach`

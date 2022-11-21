@@ -44,7 +44,9 @@ def check_result(method_name: str, content_type: str, status_code: int, body):
 
 
 async def make_request(session, url, method, post: bool = False, **kwargs):
-    logger.debug('Make request: "%s" ', method)
+    logger.info(f'Make request:'
+                f'URL: {url}\n'
+                f'Method: {method}\n')
     headers = {'Accept': 'application/json'}
     try:
         if post:

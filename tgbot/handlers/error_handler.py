@@ -2,8 +2,6 @@ import logging
 
 from aiogram import Dispatcher
 
-from loader import bot, c
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -11,7 +9,6 @@ logger = logging.getLogger(__name__)
 async def errors_handler(update, exception):
     """
     Exceptions handler. Catches all exceptions within task factory tasks.
-    :param dispatcher:
     :param update:
     :param exception:
     :return: stdout logging
@@ -56,7 +53,6 @@ async def errors_handler(update, exception):
     if isinstance(exception, CantParseEntities):
         logger.exception(f'CantParseEntities: {exception} \nUpdate: {update}')
         return True
-    await bot.send_message(c.tg_chats.debug_chat, f'exception:\nUpdate: {update} \n\n{exception} ')
 
 
 def register_error_handler(dp: Dispatcher):

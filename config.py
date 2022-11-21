@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from typing import List
-from environs import Env
 
 
 @dataclass
@@ -16,18 +15,11 @@ class DbConfig:
 class TgBot:
     token: str
     admin_ids: List[int]
-    use_redis: bool
     ip: str
     port: int
 
-
 @dataclass
-class TgChats:
-    debug_chat: str
-
-
-@dataclass
-class Server:
+class Webhook:
     url: str
 
 
@@ -35,28 +27,23 @@ class Server:
 class Config:
     tg_bot: TgBot
     db: DbConfig
-    tg_chats: TgChats
-    server: Server
+    webhook: Webhook
 
 
-def load_config(path: str = None):
-    env = Env()
-    env.read_env(path)
-
+def load_config():
+    from os import environ
     return Config(
         tg_bot=TgBot(
-            token=env.str("BOT_TOKEN"),
-            admin_ids=list(map(int, env.list("ADMINS"))),
-            use_redis=env.bool("USE_REDIS"),
-            ip=env.str('BOT_IP'), port=env.int("BOT_PORT")
+            token=environ.get("BOT_TOKEN"),
+            admin_ids=list(map(int, environ.get("ADMIN").split(","))),
+            ip=environ.get('BOT_IP'), port=int(environ.get("BOT_PORT"))
         ),
-        tg_chats=TgChats(debug_chat=env.str('DEBUG_CHAT')),
         db=DbConfig(
-            host=env.str('DB_HOST'),
-            password=env.str('DB_PASS'),
-            port=env.str('DB_PORT'),
-            user=env.str('DB_USER'),
-            database=env.str('DB_NAME')
+            host=environ.get('DB_HOST'),
+            password=environ.get('DB_PASS'),
+            port=environ.get('DB_PORT'),
+            user=environ.get('DB_USER'),
+            database=environ.get('DB_NAME')
         ),
-        server=Server(url=env.str("SERVER_URL"))
+        webhook=Webhook(url=environ.get("SERVER_URL"))
     )
