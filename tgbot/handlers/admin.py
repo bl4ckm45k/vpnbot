@@ -10,8 +10,6 @@ from tgbot.keyboards.callback_data_factory import vpn_callback
 from tgbot.keyboards.inline import keyboard_admin_action, keyboard_servers_list, keyboard_cancel
 from tgbot.states.servers_add import AddServer
 
-logger = logging.getLogger(__name__)
-
 
 async def admin_start(message: Message):
     await message.answer('Выберите действие:', reply_markup=keyboard_admin_action())

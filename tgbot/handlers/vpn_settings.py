@@ -1,4 +1,3 @@
-import logging
 from typing import Dict
 
 import aiohttp.client_exceptions
@@ -9,8 +8,6 @@ from aiohttp import ClientConnectorError
 from loader import db, bot, outline
 from tgbot.keyboards.callback_data_factory import vpn_callback
 from tgbot.keyboards.inline import keyboard_servers_list
-
-logger = logging.getLogger(__name__)
 
 
 async def vpn_handler(message: Message):

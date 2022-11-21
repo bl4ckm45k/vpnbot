@@ -1,16 +1,11 @@
-import logging
-
 from aiogram import Dispatcher
 from aiogram.types import Message, CallbackQuery, ChatType
 
 from loader import bot
 from tgbot.keyboards.inline import keyboard_start, keyboard_help
 
-logger = logging.getLogger(__name__)
-
 
 async def user_start(message: Message):
-    logger.info(f'START MESSAGE:  {message}')
     await message.answer('Привет, я помогу тебе с VPN\n\n'
                          'Исходный код бота - <a href="https://github.com/bl4ckm45k/vpnbot">GitHub</a>\n'
                          'Здесь прячется человек - <a href="https://t.me/pay4fallwall">Telegram</a>',
