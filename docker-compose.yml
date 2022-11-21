@@ -41,8 +41,6 @@ services:
       PGDATA: "/var/lib/postgresql/data/pgdata"
     volumes:
       - ./volumes:/var/lib/postgresql/data
-    ports:
-      - "42004:5432"
     networks:
       - vpn_bot
     healthcheck:
