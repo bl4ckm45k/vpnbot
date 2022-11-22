@@ -1,7 +1,6 @@
 import logging
 
 from aiogram.types import BotCommand
-from aiogram.utils import executor
 
 logger = logging.getLogger(__name__)
 
@@ -36,12 +35,14 @@ async def on_startup(dispatcher):
         await db.create_servers_table()
         register_all_filters(dispatcher)
         register_all_handlers(dispatcher)
+        # If you use polling
         await dispatcher.bot.set_my_commands([
             BotCommand('start', 'Запустить бота'),
             BotCommand('vpn', 'Доступ к VPN')
         ])
 
         # If you use webhook
+        # Make sure you have opened the ports in docker-compose
         # await bot.set_webhook(f"{PATH}")
 
 
@@ -58,11 +59,14 @@ async def on_shutdown(dispatcher):
 
 
 if __name__ == '__main__':
-    from loader import dp
+    from aiogram.utils import executor
+    from loader import dp  # , config
 
+    # If you use polling
     executor.start_polling(dp, skip_updates=True,
                            on_startup=on_startup, on_shutdown=on_shutdown)
-    # If you use webhook
-    # start_webhook(dispatcher=dp, webhook_path=f'{PATH}',
-    #               on_startup=on_startup, on_shutdown=on_shutdown,
-    #               skip_updates=True, host=f'{IP}', port=PORT)
+    # If you want to use webhooks.
+    # Make sure you have opened the ports in docker-compose
+    # executor.start_webhook(dispatcher=dp, webhook_path=f'{config.webhook.url}',
+    #                        on_startup=on_startup, on_shutdown=on_shutdown,
+    #                        skip_updates=True, host=f'{config.tg_bot.ip}', port=config.tg_bot.port)
