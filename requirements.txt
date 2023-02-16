@@ -1,4 +1,4 @@
-aiogram==2.23.1
+aiogram==2.25.1
 asyncpg==0.27.0
 aiohttp==3.8.4
 certifi==2022.12.7
