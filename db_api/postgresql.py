@@ -29,8 +29,8 @@ class Database:
                                                host=self._host,
                                                database=self._database,
                                                port=self._port,
-                                               min_size=20,
-                                               max_size=40
+                                               min_size=10,
+                                               max_size=15
                                                )
         logger.info("Created asyncpg connection pool")
         return self._pool
