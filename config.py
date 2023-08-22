@@ -18,6 +18,7 @@ class TgBot:
     ip: str
     port: int
 
+
 @dataclass
 class Webhook:
     url: str
@@ -31,19 +32,21 @@ class Config:
 
 
 def load_config():
-    from os import environ
+    from environs import Env
+    env = Env()
+    env.read_env('.env')
     return Config(
         tg_bot=TgBot(
-            token=environ.get("BOT_TOKEN"),
-            admin_ids=list(map(int, environ.get("ADMIN").split(","))),
-            ip=environ.get('BOT_IP'), port=int(environ.get("BOT_PORT"))
+            token=env.str("BOT_TOKEN"),
+            admin_ids=env.int("ADMIN"),
+            ip=env.str('BOT_IP'), port=int(env.int("BOT_PORT"))
         ),
         db=DbConfig(
-            host=environ.get('DB_HOST'),
-            password=environ.get('DB_PASS'),
-            port=environ.get('DB_PORT'),
-            user=environ.get('DB_USER'),
-            database=environ.get('DB_NAME')
+            host=env.str('DB_HOST'),
+            password=env.str('DB_PASS'),
+            port=env.str('DB_PORT'),
+            user=env.str('DB_USER'),
+            database=env.str('DB_NAME')
         ),
-        webhook=Webhook(url=environ.get("SERVER_URL"))
+        webhook=Webhook(url=env.str("SERVER_URL"))
     )
