@@ -31,7 +31,8 @@ async def on_startup(dispatcher):
     )
     logger.info("Starting bot")
     from loader import db
-    if await db.create_pool():
+    db_pool = await db.create_pool()
+    if db_pool:
         await db.create_servers_table()
         register_all_filters(dispatcher)
         register_all_handlers(dispatcher)
@@ -53,7 +54,6 @@ async def on_shutdown(dispatcher):
     await dispatcher.storage.wait_closed()
 
     logging.warning('Bye!')
-    await dispatcher.bot.close()
     await db.close()
     await outline.close()
 
