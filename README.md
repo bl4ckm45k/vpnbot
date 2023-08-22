@@ -17,7 +17,7 @@
 
 Замените `BOT_TOKEN` на свой токен
 
-В `ADMIN` укажите telegram user ID пользователя администратора или список через запятую.
+В `ADMIN` укажите telegram user ID пользователя администратора.
 Узнать свой user ID можно через бота [Get My ID bot](https://t.me/getmyid_bot "Get My ID bot")
 
 Параметры `DB`, кроме `DB_HOST`, на ваше усмотрение
