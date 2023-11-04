@@ -64,7 +64,7 @@ services:
       resources:
         limits:
           cpus: '1'
-          memory: 4G
+          memory: 1G
   vpn_bot:
     container_name: "vpn_bot"
     stop_signal: SIGINT
