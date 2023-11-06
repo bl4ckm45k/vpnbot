@@ -4,4 +4,4 @@ aiohttp==3.8.6
 certifi==2023.7.22
 ujson==5.8.0
 environs==9.5.0
-redis~=5.0.0
+redis~=5.0.1
