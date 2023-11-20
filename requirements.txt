@@ -1,6 +1,6 @@
 aiogram==2.25.1
 asyncpg==0.28.0
-aiohttp==3.8.6
+aiohttp==3.9.0
 certifi==2023.7.22
 ujson==5.8.0
 environs==9.5.0
