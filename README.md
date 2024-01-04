@@ -1,6 +1,8 @@
 ### Исходный код телеграм бота [bl4ckm45k_vpn_bot](https://t.me/bl4ckm45k_vpn_bot "bl4ckm45k_vpn_bot")
 
-### Если вам нужен бот для предоставления платного доступа обращайтесь в tg [pay4fallwall](https://pay4fallwall.t.me/ "pay4fallwall")
+### Если вам нужен бот для предоставления платного доступа: 
+##### [Описание бота](https://github.com/bl4ckm45k/vpnbot/blob/master/README_PAID_BOT.md "Описание функционала платного бота")
+##### [Писать в TG: pay4fallwall](https://pay4fallwall.t.me/ "pay4fallwall")
 
 ### Инструкция [Установка Outline VPN на Ubuntu 20.04](https://gist.github.com/JohnyDeath/3f93899dc78f90cc57ae52b41ea29bac "Установка Outline VPN на Ubuntu 20.04")
 
