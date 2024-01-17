@@ -43,21 +43,30 @@ def check_result(method_name: str, content_type: str, status_code: int, body):
     raise OutlineError(f"{body} [{status_code}]")
 
 
-async def make_request(session, url, method, post: bool = False, **kwargs):
+async def make_request(session, url, method, request_type: str, payload: dict = None, **kwargs):
     logger.info(f'Make request:'
                 f'URL: {url}\n'
                 f'Method: {method}\n')
     headers = {'Accept': 'application/json'}
     try:
-        if post:
+        if request_type == 'post':
             async with session.post(f"{url}/{method}", headers=headers, **kwargs) as response:
                 try:
                     body = await response.json()
                 except:
                     body = response.text
                 return check_result(method, response.content_type, response.status, body)
-        else:
+        if request_type == 'delete':
             async with session.delete(f"{url}/{method}", headers=headers, **kwargs) as response:
+                if response.status == 204:
+                    return True
+                try:
+                    body = await response.json()
+                except:
+                    body = response.text
+                return check_result(method, response.content_type, response.status, body)
+        if request_type == 'put':
+            async with session.put(f"{url}/{method}", json=payload, headers=headers, **kwargs) as response:
                 if response.status == 204:
                     return True
                 try:
@@ -71,3 +80,4 @@ async def make_request(session, url, method, post: bool = False, **kwargs):
 
 class Methods:
     KEYS = 'access-keys'
+    KEY_NAME = 'access-keys/{}/name'

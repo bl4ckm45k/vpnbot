@@ -48,25 +48,30 @@ class OutlineManager:
         if self._session:
             await self._session.close()
 
-    async def request(self, url: str, method: str, post: bool = False, **kwargs) -> Union[List, Dict, bool]:
+    async def request(self, url: str, method: str, request_type: str, payload: dict = None, **kwargs) -> Union[List, Dict, bool]:
         """
         Make an request to Outline API
+        :param request_type:
+        :param payload:
         :param method: API Method
         :type method: :obj:`str`
         :param url: API url
         :type url: :obj:`str`
-        :param data: request parameters
-        :param post:
-        :type data: :obj:`dict`
         :return: result
         :rtype: Union[List, Dict]
         :raise: :obj:`utils.exceptions`
         """
 
-        return await make_request(await self.get_session(), url, method, post, timeout=self.timeout, **kwargs)
+        return await make_request(await self.get_session(), url, method, request_type, payload, timeout=self.timeout, **kwargs)
 
     async def create_key(self, api_key: str):
-        return await self.request(api_key, Methods.KEYS, True)
+        return await self.request(api_key, Methods.KEYS, 'post')
 
     async def delete_key(self, api_key: str, key_id: int):
-        return await self.request(api_key, f"{Methods.KEYS}/{key_id}")
+        return await self.request(api_key, f"{Methods.KEYS}/{key_id}", 'delete')
+
+    async def change_key_name(self, api_key: str, key_id: int, name: str):
+        payload = {
+            "name": name
+        }
+        return await self.request(api_key, Methods.KEY_NAME.format(key_id), 'put', payload)
