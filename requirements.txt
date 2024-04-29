@@ -2,6 +2,6 @@ aiogram==2.25.1
 asyncpg==0.29.0
 aiohttp==3.8.6
 certifi==2023.11.17
-ujson==5.8.0
+ujson==5.9.0
 environs==9.5.0
 redis~=5.0.1
