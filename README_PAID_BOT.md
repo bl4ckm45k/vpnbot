@@ -23,6 +23,7 @@ Contact in Telegram: [pay4fall](https://t.me/pay4fallwall)
    - **YooMoney:** Directly in Telegram
    - **Aaio, LAVA:** Link or Telegram WebApp
    - **CryptoBot:** Payment via [CryptoBot](https://t.me/send)
+   - **Adding any other payment systems at your request** 
 
 3. **Referral System:**
    - Setting the number of access days for the referrer and the invitee after the referral's payment.
