@@ -1,9 +1,9 @@
-### Описание бота для Telegram
-Писать в ТГ  [pay4fall](https://t.me/pay4fallwall)
+### Telegram Bot Description
+Contact in Telegram: [pay4fall](https://t.me/pay4fallwall)
 
-**Стоимость:** 20,000₽ / USDT По курсу
+**Cost:** 20,000₽ / USDT At the current rate
 
-#### Стэк технологий:
+#### Technology Stack:
 - Docker
 - Nginx
 - - Certbot
@@ -14,50 +14,48 @@
 - aiogram3
 - FastAPI
 
-#### Основной функционал:
+#### Main Functionality:
 
-1. **Бот взаимодействует с панелью Marzban на базе Xray Core**
-   - Поддерживаемые протоколы: Vless, Vmess, Trjoan, Shadowsocks
+1. **Bot interacts with Marzban panel based on Xray Core**
+   - Supported protocols: Vless, Vmess, Trojan, Shadowsocks
 
-2. **Платежные системы:**
-   - **ЮКасса:** Прямо в Телеграм
-   - **Aaio, LAVA:** Ссылка или Telegram WebApp
-   - **CryptoBot** Оплата переходом в [CryptoBot](https://t.me/send)
-3. **Реферальная система:**
-   - Настройка количества дней доступа для пригласившего и приглашенного после оплаты рефералом.
+2. **Payment Systems:**
+   - **YooMoney:** Directly in Telegram
+   - **Aaio, LAVA:** Link or Telegram WebApp
+   - **CryptoBot:** Payment via [CryptoBot](https://t.me/send)
 
-4. **Отдельные сервисы:**
-   - Проверка и оповещение о сроках подписки.
-   - Оповещение об исчерпании лимита ключей.
-   - Генерация динамических ключей, маскировка подключения, настройка Nginx и SSL сертификатов.
-   - Доступ к БД через SSH Port Forwarding.
+3. **Referral System:**
+   - Setting the number of access days for the referrer and the invitee after the referral's payment.
 
-5. **Личный кабинет пользователя:**
-   - Информация о текущих доступах, срок, стоимость, локация.
-   - Меню с ключами.
-   - Изменение локации доступа.
+4. **Additional Services:**
+   - Subscription expiration check and notification.
+   - Notification of key limit exhaustion.
+   - Dynamic key generation, connection masking, Nginx and SSL certificate configuration.
+   - Database access via SSH Port Forwarding.
 
-6. **Панель администратора:**
-   - Добавление/удаление серверов.
-   - Замена сервера через админ-панель.
-   - Управление тарифами, лимитами, рассылка сообщений, статистика.
-   - Добавление серверов в одной стране с минимальным количеством выданных ключей.
+5. **User Dashboard:**
+   - Information about current accesses, duration, cost, location.
+   - Menu with keys.
+   - Change access location.
 
+6. **Administrator Panel:**
+   - Adding/removing servers.
+   - Server replacement through the admin panel.
+   - Tariff management, limits, message broadcasting, statistics.
+   - Adding servers in one country with the minimum number of issued keys.
 
+#### Additional Information:
 
-#### Дополнительная информация:
+- **GitHub and Docker** are used for launching and updates.
+- Assistance in server, domain, bot setup, YooMoney agreement, Aaio setup. LAVA keys are provided by the manager.
+- Planned enhancements and fixes/improvements to existing functionality are provided for free.
+- Updates from private GitHub repository.
+- [Example of a working bot](https://t.me/test_custom_vpn_bot).
+- To access administration functionality, provide your Telegram ID obtained via [@getmyid_bot](https://t.me/getmyid_bot).
 
-- **GitHub и Docker** используются для запуска и обновлений.
-- Помощь в настройке сервера, домена, бота, договора ЮКассы, настройка Aaio. Ключи LAVA предоставляются менеджером.
-- Планируемые доработки и исправления/улучшения существующего функционала предоставляются бесплатно.
-- Обновления из приватного репозитория GitHub.
-- [Пример работающего бота](https://t.me/test_custom_vpn_bot).
-- Для доступа к функционалу администрации сообщите свой Telegram ID узнав через [@getmyid_bot](https://t.me/getmyid_bot).
-
-#### Тестовые платежные данные ЮКассы:
-- Карта: 1111 1111 1111 1026
-- Дата: 12/22
+#### YooMoney Test Payment Details:
+- Card: 1111 1111 1111 1026
+- Date: 12/22
 - CVV: 000
 
-**Примечание:** Тестовый бот может лагать из-за одновременного запуска нескольких проектов на сервере.
-****
+**Note:** The test bot may lag due to simultaneous launching of multiple projects on the server.
