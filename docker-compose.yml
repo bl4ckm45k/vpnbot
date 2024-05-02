@@ -1,71 +1,30 @@
-version: '3.8'
-
 services:
-  postgres:
-    image: postgres:13.3
-    container_name: pg_vpn_bot
-    command:
-      - "postgres"
-      - "-c"
-      - "max_connections=20"
-      - "-c"
-      - "shared_buffers=192MB"
-      - "-c"
-      - "effective_cache_size=576MB"
-      - "-c"
-      - "work_mem=4915kB"
-      - "-c"
-      - "maintenance_work_mem=48MB"
-      - "-c"
-      - "checkpoint_completion_target=0.9"
-      - "-c"
-      - "wal_buffers=5898kB"
-      - "-c"
-      - "default_statistics_target=100"
-      - "-c"
-      - "effective_io_concurrency=200"
-      - "-c"
-      - "huge_pages=off"
-      - "-c"
-      - "random_page_cost=1.1"
-      - "-c"
-      - "temp_file_limit=10GB"
-      - "-c"
-      - "log_min_duration_statement=200ms"
-      - "-c"
-      - "idle_in_transaction_session_timeout=10s"
-      - "-c"
-      - "lock_timeout=1s"
-      - "-c"
-      - "statement_timeout=60s"
-      - "-c"
-      - "shared_preload_libraries=pg_stat_statements"
-      - "-c"
-      - "pg_stat_statements.max=10000"
-      - "-c"
-      - "pg_stat_statements.track=all"
+  marzban:
+    image: gozargah/marzban:latest
+    container_name: free_vpn_bot_marzban
+    restart: always
+    env_file: .env.marzban
     environment:
-      POSTGRES_DB: "${DB_NAME}"
-      POSTGRES_USER: "${DB_USER}"
-      POSTGRES_PASSWORD: "${DB_PASS}"
-      PGDATA: "/var/lib/postgresql/data/pgdata"
-    volumes:
-      - ./volumes:/var/lib/postgresql/data
+      UVICORN_HOST: "marzban"
+      UVICORN_PORT: "8001"
+      YOUR_DOMAIN: ${DOMAIN}
+    ports:
+      - "8001:8001"
     networks:
-      - vpn_bot
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1G
+      - free_vpn_bot
+    volumes:
+      - marz-storage:/code
+      - ./volumes/marzban:/var/lib/marzban
+      - ./etc/letsencrypt:/etc/letsencrypt
+      - ./certbot/data:/var/www/certbot
+      - /etc/timezone:/etc/timezone:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "900k"
+        max-file: "10"
   vpn_bot:
+    image: free_vpn_bot
     container_name: "vpn_bot"
     stop_signal: SIGINT
     build:
@@ -78,10 +37,13 @@ services:
     env_file:
       - ".env"
     networks:
-      - vpn_bot
+      - free_vpn_bot
     depends_on:
-      - postgres
-
+      - marzban
 networks:
-  vpn_bot:
+  free_vpn_bot:
     driver: bridge
+
+volumes:
+  marz-storage:
+    driver: local

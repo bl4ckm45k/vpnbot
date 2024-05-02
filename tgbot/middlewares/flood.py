@@ -1,62 +1,55 @@
-import logging
+from typing import Any, Awaitable, Callable, Dict
 
-from aiogram import types
-from aiogram.dispatcher import DEFAULT_RATE_LIMIT
-from aiogram.dispatcher.handler import CancelHandler, current_handler
-from aiogram.dispatcher.middlewares import BaseMiddleware
-from aiogram.utils.exceptions import Throttled
+from aiogram import BaseMiddleware
+from aiogram.types import TelegramObject
+from cachetools import TTLCache
 
-from loader import dp as Dispatcher
-
-logger = logging.getLogger(__name__)
+THROTTLE_RATE_L2 = 0.5
 
 
 class ThrottlingMiddleware(BaseMiddleware):
-    """
-    Simple middleware
-    """
+    def __init__(self):
+        self.cache_l1 = TTLCache(maxsize=10_000, ttl=0.5)
+        self.cache_l2 = TTLCache(maxsize=10_000, ttl=THROTTLE_RATE_L2)
 
-    def __init__(self, limit=DEFAULT_RATE_LIMIT, key_prefix='antiflood_'):
-        self.rate_limit = limit
-        self.prefix = key_prefix
-        super(ThrottlingMiddleware, self).__init__()
+    async def __call__(
+            self,
+            handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
+            event: TelegramObject,
+            data: Dict[str, Any],
+    ) -> Any:
 
-    async def on_process_message(self, message: types.Message, data: dict):
-        """
-        This handler is called when dispatcher receives a message
+        if event.from_user.id in self.cache_l1:
+            if event.from_user.id in self.cache_l2:
+                return
 
-        :param message:
-        """
-        # Get current handler
-        handler = current_handler.get()
+            self.cache_l2[event.from_user.id] = None
+            await event.answer(text="Не спамь!")
+            return
 
-        # Get dispatcher from context
-        dispatcher = Dispatcher.get_current()
-        # If handler was configured, get rate limit and key from handler
-        if handler:
-            limit = getattr(handler, 'throttling_rate_limit', self.rate_limit)
-            key = getattr(handler, 'throttling_key', f"{self.prefix}_{handler.__name__}")
-        else:
-            limit = self.rate_limit
-            key = f"{self.prefix}_message"
+        self.cache_l1[event.from_user.id] = None
 
-        # Use Dispatcher.throttle method.
-        try:
-            await dispatcher.throttle(key, rate=limit)
-        except Throttled as t:
-            # Execute action
-            await self.message_throttled(message, t)
+        return await handler(event, data)
 
-            # Cancel current handler
-            raise CancelHandler()
-
-    async def message_throttled(self, message: types.Message, throttled: Throttled):
-        """
-        Notify user only on first exceed and notify about unlocking only on last exceed
-
-        :param message:
-        :param throttled:
-        """
-        if throttled.exceeded_count <= 2:
-            logger.info(f'<= 2 {throttled.exceeded_count}')
-            await message.reply(f'Слишком много запросов, попробуйте позже')
+# class CallbackThrottlingMiddleware(BaseMiddleware):
+#     def __init__(self):
+#         self.cache_l1 = TTLCache(maxsize=10_000, ttl=config.THROTTLE_RATE)
+#         self.cache_l2 = TTLCache(maxsize=10_000, ttl=THROTTLE_RATE_L2)
+#
+#     async def __call__(
+#             self,
+#             handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
+#             event: TelegramObject,
+#             data: Dict[str, Any],
+#     ) -> Any:
+#         if event.from_user.id in self.cache_l1:
+#             if event.from_user.id in self.cache_l2:
+#                 return
+#
+#             self.cache_l2[event.from_user.id] = None
+#             await event.answer(text="Не спамь!", show_alert=True)
+#             return
+#
+#         self.cache_l1[event.from_user.id] = None
+#
+#         return await handler(event, data)

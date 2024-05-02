@@ -1,33 +1,40 @@
-### Исходный код телеграм бота [bl4ckm45k_vpn_bot](https://t.me/bl4ckm45k_vpn_bot "bl4ckm45k_vpn_bot")
+### [Русский язык](README_RU.md)
+### Source code of the Telegram bot [bl4ckm45k_vpn_bot](https://t.me/bl4ckm45k_vpn_bot "bl4ckm45k_vpn_bot")
 
-### Если вам нужен бот для предоставления платного доступа: 
-#### [Описание  платного бота](https://github.com/bl4ckm45k/vpnbot/blob/master/README_PAID_BOT.md "Описание функционала платного бота")
-#### [Писать в TG: pay4fallwall](https://pay4fallwall.t.me/ "pay4fallwall")
+### If you need a bot for providing paid access:
+#### [Description of the paid bot functionality](https://github.com/bl4ckm45k/vpnbot/blob/master/README_PAID_BOT.md "Description of the paid bot functionality")
+#### [Contact on TG: pay4fallwall](https://pay4fallwall.t.me/ "pay4fallwall")
 
-### Инструкция [Установка Outline VPN на Ubuntu 20.04](https://gist.github.com/JohnyDeath/3f93899dc78f90cc57ae52b41ea29bac "Установка Outline VPN на Ubuntu 20.04")
-
-Когда скрипт закончит, то выведет примерно такое содержимое.
-
+### Setup
+- Clone this repository
+- Navigate to the bot's directory
+```bash
+cd vpnbot
 ```
-{ 
-  "apiUrl": "https://0.0.0.0:0000/XXXXXXXXXXXX", 
-  "certSha256": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" 
-}
+
+Rename the file `env.dist` to `.env`
+```bash
+cat env.dist > .env
 ```
-При добавлении сервера в Outline Manager укажите его в пункте 2.
 
-### Подготовка к запуску
-Переименуйте файл `env.dist` в `.env` 
+Replace `BOT_TOKEN` with your token
 
-Замените `BOT_TOKEN` на свой токен
+In `ADMIN`, specify the Telegram user ID of the administrator.
 
-В `ADMIN` укажите telegram user ID пользователя администратора.
-Узнать свой user ID можно через бота [Get My ID bot](https://t.me/getmyid_bot "Get My ID bot")
+You can find out your user ID through the [Get My ID bot](https://t.me/getmyid_bot "Get My ID bot")
 
-Параметры `DB`, кроме `DB_HOST`, на ваше усмотрение
+Do not change the parameters `USE_WEBHOOK` and `False`, otherwise the bot will not work.
 
-### Запуск
+Other parameters are not used in the open-source version.
 
-`docker compose up --detach`
+### Marzban Parameters
+To set up the login and password, change the variables `SUDO_USERNAME` and `SUDO_PASSWORD` in the .env.marzban file.
 
-#### Для добавления и удаления серверов используйте команду `/admin`, необходим только `apiUrl` 
+### Launch
+```bash
+docker compose up --detach
+```
+
+Done. The bot will output all host keys from the Marzban panel.
+
+### The Marzban panel will be accessible on port `8001`

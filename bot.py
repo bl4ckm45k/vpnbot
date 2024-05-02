@@ -1,72 +1,100 @@
+import asyncio
 import logging
 
-from aiogram.types import BotCommand
+from aiogram import Bot, Dispatcher, F
+from aiogram.enums import ChatType
+from aiogram.types import BotCommand, BotCommandScopeDefault
+from aiogram.utils.callback_answer import CallbackAnswerMiddleware
+from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
+from aiohttp import web
+
+from loader import config
+from tgbot.handlers import routers_list
+from tgbot.middlewares.flood import ThrottlingMiddleware
+from utils import broadcaster
 
 logger = logging.getLogger(__name__)
 
 
-def register_all_filters(dispatcher):
-    from tgbot.filters.admin import AdminFilter
-    dispatcher.filters_factory.bind(AdminFilter)
+async def on_startup(bot: Bot):
+    await broadcaster.broadcast(bot, [config.tg_bot.admin_id], "Бот запущен")
+    await register_commands(bot)
+    if config.webhook.use_webhook:
+        await bot.set_webhook(f"https://{config.webhook.domain}{config.webhook.url}webhook")
 
 
-def register_all_handlers(dp):
-    from tgbot.handlers.admin import register_admin
-    from tgbot.handlers.cancel import register_cancel
-    from tgbot.handlers.error_handler import register_error_handler
-    from tgbot.handlers.user import register_user
-    from tgbot.handlers.vpn_settings import register_vpn_handlers
-
-    register_cancel(dp)
-    register_admin(dp)
-    register_user(dp)
-    register_vpn_handlers(dp)
-    register_error_handler(dp)
+async def register_commands(bot: Bot):
+    commands = [
+        BotCommand(command='start', description='Главное меню 🏠'),
+        BotCommand(command='help', description='Помощь'),
+        BotCommand(command='vpn', description='Получить ключи'),
+    ]
+    await bot.set_my_commands(commands, BotCommandScopeDefault())
 
 
-async def on_startup(dispatcher):
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format=u'%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s',
+def register_global_middlewares(dp: Dispatcher):
+    """
+    Register global middlewares for the given dispatcher.
+    Global middlewares here are the ones that are applied to all the handlers (Specify for the type of update)
+
+    :param dp: The dispatcher instance.
+    :type dp: Dispatcher
+    :param config: The configuration object from the loaded configuration
+    :return: None
+    """
+
+    middleware_types = [
+        ThrottlingMiddleware(),
+    ]
+    for middleware_type in middleware_types:
+        dp.message.outer_middleware(middleware_type)
+        dp.callback_query.outer_middleware(middleware_type)
+    dp.callback_query.outer_middleware(CallbackAnswerMiddleware())
+    dp.message.filter(F.chat.type == ChatType.PRIVATE)
+
+
+def main_webhook():
+    from loader import bot, dp
+
+    dp.include_routers(*routers_list)
+    dp.startup.register(on_startup)
+    register_global_middlewares(dp)
+
+    app = web.Application()
+
+    # Create an instance of request handler,
+    # aiogram has few implementations for different cases of usage
+    # In this example we use SimpleRequestHandler which is designed to handle simple cases
+    webhook_requests_handler = SimpleRequestHandler(
+        dispatcher=dp,
+        bot=bot,
+        # secret_token=WEBHOOK_SECRET,
     )
-    logger.info("Starting bot")
-    from loader import db
-    db_pool = await db.create_pool()
-    if db_pool:
-        await db.create_servers_table()
-        register_all_filters(dispatcher)
-        register_all_handlers(dispatcher)
-        # If you use polling
-        await dispatcher.bot.set_my_commands([
-            BotCommand('start', 'Запустить бота'),
-            BotCommand('vpn', 'Доступ к VPN')
-        ])
+    # Register webhook handler on application
+    webhook_requests_handler.register(app, path=f'{config.webhook.url}webhook')
 
-        # If you use webhook
-        # Make sure you have opened the ports in docker-compose
-        # await bot.set_webhook(f"{PATH}")
+    # Mount dispatcher startup and shutdown hooks to aiohttp application
+    setup_application(app, dp, bot=bot)
+
+    # And finally start webserver
+    web.run_app(app, host='vpn_bot', port=config.tg_bot.port)
 
 
-async def on_shutdown(dispatcher):
-    from loader import db, outline
-    logging.warning('Shutting down..')
-    await dispatcher.storage.close()
-    await dispatcher.storage.wait_closed()
+async def main_polling():
+    from loader import bot, dp
+    dp.include_routers(*routers_list)
 
-    logging.warning('Bye!')
-    await db.close()
-    await outline.close()
+    register_global_middlewares(dp)
+    await on_startup(bot)
+    await bot.delete_webhook()
+    await dp.start_polling(bot)
 
 
 if __name__ == '__main__':
-    from aiogram.utils import executor
-    from loader import dp  # , config
-
-    # If you use polling
-    executor.start_polling(dp, skip_updates=True,
-                           on_startup=on_startup, on_shutdown=on_shutdown)
-    # If you want to use webhooks.
-    # Make sure you have opened the ports in docker-compose
-    # executor.start_webhook(dispatcher=dp, webhook_path=f'{config.webhook.url}',
-    #                        on_startup=on_startup, on_shutdown=on_shutdown,
-    #                        skip_updates=True, host=f'{config.tg_bot.ip}', port=config.tg_bot.port)
+    if config.webhook.use_webhook:
+        main_webhook()
+    else:
+        try:
+            asyncio.run(main_polling())
+        except (KeyboardInterrupt, SystemExit):
+            logging.error("Бот выключен!")
