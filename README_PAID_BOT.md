@@ -1,7 +1,7 @@
 ### Telegram Bot Description
 Contact in Telegram: [pay4fall](https://t.me/pay4fallwall)
 
-**Cost:** 20,000₽ / USDT At the current rate
+**Cost:** $200 in crypto
 
 #### Technology Stack:
 - Docker
