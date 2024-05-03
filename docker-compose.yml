@@ -25,7 +25,7 @@ services:
         max-file: "10"
   vpn_bot:
     image: free_vpn_bot
-    container_name: "vpn_bot"
+    container_name: free_vpn_bot
     stop_signal: SIGINT
     build:
       context: .
