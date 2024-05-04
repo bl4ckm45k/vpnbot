@@ -37,4 +37,4 @@ docker compose up --detach
 
 Done. The bot will output all host keys from the Marzban panel.
 
-### The Marzban panel will be accessible on port `8001`
+### The Marzban panel will be accessible on port `8002`
