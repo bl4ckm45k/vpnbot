@@ -34,5 +34,5 @@ bot = Bot(token=config.tg_bot.token,
           default=DefaultBotProperties(parse_mode=ParseMode.HTML, link_preview_is_disabled=True))
 
 dp = Dispatcher(storage=MemoryStorage())
-base_url = f'https://{config.webhook.domain}/' if config.webhook.use_webhook else 'http://marzban:8001'
+base_url = f'https://{config.webhook.domain}/' if config.webhook.use_webhook else 'http://marzban:8002'
 marzban_client = MarzClientCache(base_url, config, logger)
