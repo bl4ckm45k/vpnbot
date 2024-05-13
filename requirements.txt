@@ -1,4 +1,4 @@
-aiogram~=3.5.0
+aiogram~=3.6.0
 aiohttp~=3.9.5
 certifi==2024.2.2
 ujson==5.9.0
