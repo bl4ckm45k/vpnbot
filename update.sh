@@ -8,8 +8,9 @@ docker ps -a | grep free_vpn_bot | awk '{print $1}' | xargs docker rm
 docker rmi free_vpn_bot
 # Создаем новый образ free_vpn_bot
 docker build -t free_vpn_bot .
-# Останавливаем и удаляем контейнер marzban
+# Останавливаем контейнер marzban
 docker stop free_vpn_bot_marzban
+# Удаляем контейнер marzban
 docker rm free_vpn_bot_marzban
 # Поднимаем контейнеры
 docker compose up -d --remove-orphans

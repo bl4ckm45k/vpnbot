@@ -1,7 +1,9 @@
 ### Telegram Bot Description
 Contact in Telegram: [pay4fall](https://t.me/pay4fallwall)
 
-**Cost:** $200 in crypto
+**Cost:** $300 in crypto
+
+- [Example of a working bot](https://t.me/test_custom_vpn_bot).
 
 #### Technology Stack:
 - Docker
@@ -17,12 +19,14 @@ Contact in Telegram: [pay4fall](https://t.me/pay4fallwall)
 #### Main Functionality:
 
 1. **Bot interacts with Marzban panel based on Xray Core**
-   - Supported protocols: Vless, Vmess, Trojan, Shadowsocks
+   - Supported protocols: Vless, Vmess, Trojan, Shadowsocks, Wireguard
+   - Support 4 languages: English, Persian, Arabic, Russian
 
 2. **Payment Systems:**
    - **YooMoney:** Directly in Telegram
    - **Aaio, LAVA:** Link or Telegram WebApp
    - **CryptoBot:** Payment via [CryptoBot](https://t.me/send)
+   - **Cryptomus:** Link or Telegram WebApp
    - **Adding any other payment systems at your request** 
 
 3. **Referral System:**
@@ -51,7 +55,6 @@ Contact in Telegram: [pay4fall](https://t.me/pay4fallwall)
 - Assistance in server, domain, bot setup, YooMoney agreement, Aaio setup. LAVA keys are provided by the manager.
 - Planned enhancements and fixes/improvements to existing functionality are provided for free.
 - Updates from private GitHub repository.
-- [Example of a working bot](https://t.me/test_custom_vpn_bot).
 - To access administration functionality, provide your Telegram ID obtained via [@getmyid_bot](https://t.me/getmyid_bot).
 
 #### YooMoney Test Payment Details:
