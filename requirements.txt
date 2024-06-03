@@ -3,7 +3,7 @@ aiohttp~=3.9.5
 certifi==2024.2.2
 ujson==5.9.0
 environs==11.0.0
-requests~=2.31.0
+requests~=2.32.3
 cachetools~=5.3.3
 marzban-api-client~=0.4.9
 betterlogging~=1.0.0
