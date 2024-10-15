@@ -1,9 +1,9 @@
 ### Telegram Bot Description
-Contact in Telegram: [pay4fall](https://t.me/pay4fallwall)
+Contact in Telegram: [pay4fallwall](https://t.me/pay4fallwall)
 
 **Cost:** $300 in crypto
 
-- [Example of a working bot](https://t.me/test_custom_vpn_bot).
+- [Example of a working bot](https://t.me/Bl4ckm45k_cvb_bot).
 
 #### Technology Stack:
 - Docker
