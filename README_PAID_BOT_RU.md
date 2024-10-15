@@ -1,9 +1,9 @@
 ### Описание бота для Telegram
-Писать в ТГ  [pay4fall](https://t.me/pay4fallwall)
+Писать в ТГ  [pay4fallwall](https://t.me/pay4fallwall)
 
 **Стоимость:** 30,000₽ / USDT По курсу
 
-- [Пример работающего бота](https://t.me/test_custom_vpn_bot).
+- [Пример работающего бота](https://t.me/Bl4ckm45k_cvb_bot).
 
 #### Стэк технологий:
 - Docker
