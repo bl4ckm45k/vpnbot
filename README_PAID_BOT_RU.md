@@ -1,4 +1,6 @@
 ### Описание бота для Telegram
+[Telegram канал с историей разработки](https://t.me/cvb_poject)
+
 Писать в ТГ  [pay4fallwall](https://t.me/pay4fallwall)
 
 **Стоимость:** 
