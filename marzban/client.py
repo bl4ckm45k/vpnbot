@@ -1,7 +1,8 @@
+import asyncio
 import base64
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Optional
 from urllib.parse import urlparse, parse_qs
 
@@ -13,13 +14,8 @@ from loader import marzban_client
 
 logger = logging.getLogger(__name__)
 proxies = {
-    "vmess": {},
     "vless": {
         "flow": ""
-    },
-    "trojan": {},
-    "shadowsocks": {
-        "method": "chacha20-ietf-poly1305"
     }
 }
 proxies = UserCreateProxies.from_dict(proxies)
@@ -46,6 +42,10 @@ async def create_user(sub_id: str, expire: datetime) -> bool:
 async def get_marz_user(sub_id: str) -> UserResponse:
     response: Response = await get_user.asyncio_detailed(sub_id,
                                                          client=await marzban_client.get_client())
+    if not response.parsed:
+        await create_user(sub_id, expire=datetime.now() + timedelta(days=365 * 10))
+        await asyncio.sleep(1)
+        return await get_marz_user(sub_id)
     return response.parsed
 
 

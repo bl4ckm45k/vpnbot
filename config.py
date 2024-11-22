@@ -7,13 +7,14 @@ from environs import Env
 class TgBot:
     token: str
     admin_id: int
-
+    port: int
     @staticmethod
     def from_env(env: Env):
         token = env.str("BOT_TOKEN")
         admin_id = env.int("ADMIN")
+        port = env.int("BOT_PORT")
 
-        return TgBot(token=token, admin_id=admin_id)
+        return TgBot(token=token, admin_id=admin_id, port=port)
 
 
 @dataclass

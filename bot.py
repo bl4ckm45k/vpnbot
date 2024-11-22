@@ -12,6 +12,7 @@ from loader import config
 from tgbot.handlers import routers_list
 from tgbot.middlewares.flood import ThrottlingMiddleware
 from utils import broadcaster
+from utils.marzban import generate_config
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +22,7 @@ async def on_startup(bot: Bot):
     await register_commands(bot)
     if config.webhook.use_webhook:
         await bot.set_webhook(f"https://{config.webhook.domain}{config.webhook.url}webhook")
+    await generate_config()
 
 
 async def register_commands(bot: Bot):
@@ -39,7 +41,6 @@ def register_global_middlewares(dp: Dispatcher):
 
     :param dp: The dispatcher instance.
     :type dp: Dispatcher
-    :param config: The configuration object from the loaded configuration
     :return: None
     """
 

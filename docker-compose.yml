@@ -1,27 +1,25 @@
 services:
   marzban:
-    image: gozargah/marzban:latest
+    image: gozargah/marzban:v0.7.0
     container_name: free_vpn_bot_marzban
     restart: always
     env_file: .env.marzban
+    command: bash -c "alembic upgrade head && python /code/marzban.py"
     environment:
       UVICORN_HOST: "marzban"
       UVICORN_PORT: "8002"
       YOUR_DOMAIN: ${DOMAIN}
     ports:
       - "0.0.0.0:8002:8002"
-      - "0.0.0.0:8081:8080"
       - "0.0.0.0:8443:8433"
       - "0.0.0.0:2053:2053"
-      - "0.0.0.0:2083:2083"
-      - "0.0.0.0:1080:1080"
     networks:
       - free_vpn_bot
     volumes:
       - marz-storage:/code
+      - ./marzban.py:/code/marzban.py
       - ./volumes/marzban:/var/lib/marzban
-      - ./etc/letsencrypt:/etc/letsencrypt
-      - ./certbot/data:/var/www/certbot
+      - ./volumes/marzban/xray_config.json:/code/xray_config.json:rw
       - /etc/timezone:/etc/timezone:ro
     logging:
       driver: "json-file"
