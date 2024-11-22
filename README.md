@@ -1,6 +1,10 @@
 ### [Русский язык](README_RU.md)
 ### Source code of the Telegram bot [bl4ckm45k_vpn_bot](https://t.me/bl4ckm45k_vpn_bot "bl4ckm45k_vpn_bot")
 
+`For security purposes and easy setup, this bot supports only VLESS tcp or grpc protocols with REALITY 
+with automatic generation of private keys and ShortID. 
+For more reliable encryption, always install TLS certificates for the VLESS, VMESS and Trojan protocols
+`
 ### If you need a bot for providing paid access:
 #### [Description of the paid bot functionality](https://github.com/bl4ckm45k/vpnbot/blob/master/README_PAID_BOT.md "Description of the paid bot functionality")
 #### [Contact on TG: pay4fallwall](https://pay4fallwall.t.me/ "pay4fallwall")
