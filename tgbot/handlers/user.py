@@ -18,7 +18,7 @@ async def user_start(message: Message):
 @user_router.message(Command('help'))
 async def help_handler(message: Message):
     await message.answer(f'Бот предоставляет доступ к VPN на базе '
-                         f'<a href="https://github.com/XTLS/Xray-core">Xray-core</a> и созданный с использованием Python и ReactJS.',
+                         f'<a href="https://github.com/XTLS/Xray-core">Xray-core</a>',
                          reply_markup=keyboard_help(), disable_web_page_preview=True)
 
 
@@ -27,5 +27,5 @@ async def help_callback_handler(callback_query: CallbackQuery):
     await callback_query.answer()
     await bot.send_message(callback_query.from_user.id,
                            f'Бот предоставляет доступ к VPN на базе '
-                           f'<a href="https://github.com/XTLS/Xray-core">Xray-core</a> и созданный с использованием Python и ReactJS.',
+                           f'<a href="https://github.com/XTLS/Xray-core">Xray-core</a>',
                            reply_markup=keyboard_help(), disable_web_page_preview=True)
