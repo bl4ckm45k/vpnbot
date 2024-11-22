@@ -1,0 +1,112 @@
+{
+    "log": {
+        "loglevel": "info"
+    },
+    "inbounds": [
+        {
+            "tag": "VLESS TCP REALITY",
+            "listen": "0.0.0.0",
+            "port": 8443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "tcpSettings": {},
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "dest": "ign.com:443",
+                    "xver": 0,
+                    "serverNames": [
+                        "ign.com"
+                    ],
+                    "privateKey": "qEOL51lFs2qMt9S5CcJ_9GnnrSacrX9YI1HbpMatvnA",
+                    "shortIds": [
+                        "be38a8a4d435d353"
+                    ]
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            }
+        },
+        {
+            "tag": "VLESS GRPC REALITY",
+            "listen": "0.0.0.0",
+            "port": 2053,
+            "protocol": "vless",
+            "settings": {
+                "clients": [],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "grpc",
+                "grpcSettings": {
+                    "serviceName": "xyz"
+                },
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "dest": "ign.com:443",
+                    "xver": 0,
+                    "serverNames": [
+                        "ign.com"
+                    ],
+                    "privateKey": "qEOL51lFs2qMt9S5CcJ_9GnnrSacrX9YI1HbpMatvnA",
+                    "shortIds": [
+                        "b767d5cf8d140838"
+                    ]
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "tag": "DIRECT"
+        },
+        {
+            "protocol": "blackhole",
+            "tag": "BLOCK"
+        }
+    ],
+    "routing": {
+        "rules": [
+            {
+                "ip": [
+                    "geoip:private"
+                ],
+                "outboundTag": "BLOCK",
+                "type": "field"
+            },
+            {
+                "domain": [
+                    "geosite:private"
+                ],
+                "outboundTag": "BLOCK",
+                "type": "field"
+            },
+            {
+                "protocol": [
+                    "bittorrent"
+                ],
+                "outboundTag": "BLOCK",
+                "type": "field"
+            }
+        ]
+    }
+}
