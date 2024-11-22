@@ -4,3 +4,4 @@ __pycache__/
 .idea
 /venv
 /.env
+/volumes/marzban/xray_config.json
