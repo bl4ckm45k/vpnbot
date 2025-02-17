@@ -6,4 +6,4 @@ cachetools~=5.5.1
 marzban-api-client~=0.4.9
 betterlogging~=1.0.0
 requests
-cryptography~=44.0.0
+cryptography~=44.0.1
