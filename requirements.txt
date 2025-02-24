@@ -2,7 +2,7 @@ aiogram==3.15.0
 certifi>=2024.8.30
 ujson==5.9.0
 environs==11.2.1
-cachetools~=5.5.1
+cachetools~=5.5.2
 marzban-api-client~=0.4.9
 betterlogging~=1.0.0
 requests
