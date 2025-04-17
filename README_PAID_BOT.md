@@ -4,7 +4,7 @@
 Contact in Telegram: [pay4fallwall](https://t.me/pay4fallwall)
 
 **Cost:** 
-- Lifetime license (Withous Source code, only compiled files) - $550 in crypto
+- Lifetime license (Withous Source code, only compiled files) - $250 in crypto
 - Source code with licence server - [Price on request](https://t.me/pay4fallwall)
 
 - [Example of a working bot](https://t.me/Bl4ckm45k_cvb_bot).
