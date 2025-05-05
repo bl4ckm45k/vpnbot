@@ -4,7 +4,7 @@
 Писать в ТГ  [pay4fallwall](https://t.me/pay4fallwall)
 
 **Стоимость:** 
-- 20,000₽ / USDT По курсу - [Цена по запросу](https://t.me/pay4fallwall)
+- [Цена по запросу](https://t.me/pay4fallwall)
 
 - [Пример работающего бота](https://t.me/Bl4ckm45k_cvb_bot).
 
