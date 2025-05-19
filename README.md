@@ -1,4 +1,12 @@
 ### [Русский язык](README_RU.md)
+### Recommended Hosting Providers
+
+| Provider | Features | Link |
+|---------|----------|------|
+| **Veesp** | Mid-range price, fast, unlimited traffic, clean business IPs | [Visit](https://secure.veesp.com/?affid=1374) |
+| **VDSka** | Cheap, fast, 3 TB traffic | [Visit](https://vdska.ru?p=21892) |
+| **VDSina** | Expensive, fast, reliable — **10% Discount** | [Visit](https://www.vdsina.com/?partner=bv6a5sjwaj) |
+
 ### Source code of the Telegram bot [bl4ckm45k_vpn_bot](https://t.me/bl4ckm45k_vpn_bot "bl4ckm45k_vpn_bot")
 
 `For security purposes and easy setup, this bot supports only VLESS tcp or grpc protocols with REALITY 
