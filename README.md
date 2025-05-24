@@ -18,7 +18,20 @@ For more reliable encryption, always install TLS certificates for the VLESS, VME
 #### [Contact on TG: pay4fallwall](https://pay4fallwall.t.me/ "pay4fallwall")
 
 ### Setup
+```bash
+sudo apt update -y && sudo apt upgrade -y
+sudo apt install git nano ufw curl cron -y
+```
+
+- Install docker 
+```bash
+sudo curl https://get.docker.com | sh
+```
 - Clone this repository
+```bash
+git clone https://github.com/bl4ckm45k/vpnbot.git
+```
+
 - Navigate to the bot's directory
 ```bash
 cd vpnbot
@@ -44,7 +57,10 @@ To set up the login and password, change the variables `SUDO_USERNAME` and `SUDO
 
 ### Launch
 ```bash
-docker compose up --detach
+```bash
+chmod +x update.sh
+./update.sh
+```
 ```
 
 Done. The bot will output all host keys from the Marzban panel.

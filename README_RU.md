@@ -20,7 +20,18 @@
 
 
 ### Подготовка к запуску
+```bash
+sudo apt update -y && sudo apt upgrade -y
+sudo apt install git nano ufw curl cron -y
+```
+- Установите Docker
+```bash
+sudo curl https://get.docker.com | sh
+```
 - Клонируйте данный репозиторий
+```bash
+git clone https://github.com/bl4ckm45k/vpnbot.git
+```
 - Перейдите в папку с ботом
 ```pycon
 cd vpnbot
@@ -44,9 +55,12 @@ cat env.dist > .env
 ### Параметры Marzban
 Для установки логина и пароля измените переменные `SUDO_USERNAME` и `SUDO_PASSWORD` в файле .env.marzban
 
+
+
 ### Запуск
-```pycon
-docker compose up --detach
+```bash
+chmod +x update.sh
+./update.sh
 ```
 
 Готово. Бот будет выдавать все ключи хостов из панели Marzban
