@@ -13,10 +13,6 @@
 with automatic generation of private keys and ShortID. 
 For more reliable encryption, always install TLS certificates for the VLESS, VMESS and Trojan protocols
 `
-### If you need a bot for providing paid access:
-#### [Description of the paid bot functionality](https://github.com/bl4ckm45k/vpnbot/blob/master/README_PAID_BOT.md "Description of the paid bot functionality")
-#### [Contact on TG: pay4fallwall](https://pay4fallwall.t.me/ "pay4fallwall")
-
 ### Setup
 ```bash
 sudo apt update -y && sudo apt upgrade -y
