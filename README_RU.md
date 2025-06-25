@@ -14,11 +14,6 @@
 Для более надежного шифрования всегда устанавливайте сертификаты TLS для протоколов VLESS, VMESS и Trojan.
 `
 
-### Если вам нужен бот для предоставления платного доступа: 
-#### [Описание  платного бота](https://github.com/bl4ckm45k/vpnbot/blob/master/README_PAID_BOT_RU.md "Описание функционала платного бота")
-#### [Писать в TG: pay4fallwall](https://pay4fallwall.t.me/ "pay4fallwall")
-
-
 ### Подготовка к запуску
 ```bash
 sudo apt update -y && sudo apt upgrade -y
